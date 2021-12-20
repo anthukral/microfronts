@@ -1,8 +1,18 @@
 const express = require("express");
 const { v4 } = require("uuid");
+const cors = require("cors");
 const app = express();
+app.use(cors());
+app.use(express.json());
+
 app.use("/login", (req, res) => {
-  res.json({ sessionid: v4(), useid: v4(), body: req.body });
+  console.log(req.body);
+  const sessionId = v4();
+  const userid = v4();
+  // res
+  //   .status(200)
+  //   .send(JSON.stringify({ sessionId, userid, body: { ...req.body } }));
+  res.json({ sessionId, userid, body: { ...req.body } });
 });
 app.use("/", (_, res) => {
   res.json({ status: "Ok" });
