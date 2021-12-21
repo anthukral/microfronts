@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ReducerType } from "./Nav";
 
 const translate = (obj, carry = "") => {
   let temp: { [key: string]: string | Array<string> } = {};
@@ -8,7 +9,11 @@ const translate = (obj, carry = "") => {
   });
   return temp;
 };
-const Login = () => {
+interface LoginProps {
+  dispatch: (x: ReducerType) => null;
+}
+
+const Login = ({ dispatch }: LoginProps) => {
   const [session, setSession] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -31,6 +36,10 @@ const Login = () => {
       .then((response) => {
         setSession(translate(response));
         setLoggedIn(true);
+        dispatch({
+          type: "shared/update",
+          payload: { act: "login", ...response },
+        });
       })
 
       .catch((e) => {
@@ -39,7 +48,6 @@ const Login = () => {
         setSession(null);
       });
   };
-  console.log(session);
   return (
     <>
       <div>Login</div>

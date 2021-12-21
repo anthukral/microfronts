@@ -6,7 +6,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/login", (req, res) => {
-  console.log(req.body);
   const sessionId = v4();
   const userid = v4();
   // res

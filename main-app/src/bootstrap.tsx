@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import Context from "./shared/Observavle";
+import Context from "./shared/Observable";
 import Main from "./Main";
 import { Provider } from "react-redux";
 import store from "./store";

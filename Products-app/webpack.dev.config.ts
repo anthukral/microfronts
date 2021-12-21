@@ -36,13 +36,14 @@ const config: Configuration = {
     }),
     new webpack.container.ModuleFederationPlugin({
       name: "product",
-      library: { type: "var", name: "product" },
       filename: "product.js",
       exposes: {
-        "./Products": "./src/Product.tsx",
+        "./Products": "./src/App.tsx",
       },
-      remotes: {
-        nav: "nav@http://localhost:4002/nav.js",
+      shared: {
+        react: { singleton: true, eager: true },
+        "react-dom": { singleton: true, eager: true },
+        "react-router-dom": { singleton: true, eager: true },
       },
     }),
 
