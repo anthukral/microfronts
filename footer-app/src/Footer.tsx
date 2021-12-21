@@ -1,5 +1,22 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
+
+const channel=window.__channel;
 export default function Footer() {
+  const [theme, setThemeFromChannel]=useState("");
+
+  const channelHook=()=>{
+    if(channel){
+    channel.onmessage=({data})=>{
+      console.log(data,"footer")
+      setThemeFromChannel(data);
+    }
+    return ()=>channel.close();
+  }
+  }
+  //eslint-disable-next-block react-hooks/exhaustive-deps
+  {
+  useEffect(channelHook,[channel])
+  }
   return (
     <div>
       <div>
@@ -11,7 +28,7 @@ export default function Footer() {
           <li>footer 3</li>
 
           <li>footer 4</li>
-          <li>login</li>
+          {theme &&<li>{theme}</li>}
         </ul>
       </div>
     </div>
