@@ -2,10 +2,10 @@ import React from "react";
 import { NavProps } from "./Nav";
 import { Link } from "react-router-dom";
 export const Home = ({ setQuery }: NavProps) => (
-  <div>
+  <div className="container">
     <h1>Nykaa navigation</h1>
     <input type="text" placeholder="search any item here" onChange={setQuery} />
-    <Link to="/login">Login</Link>
+    <Link className="btn btn-outline-primary" to="/login">Login</Link>
   </div>
 );
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ReducerType } from "./Nav";
-
+//import { ReducerType } from "./Nav";
+import sharedResources from "./services/sharedChannel";
 const translate = (obj, carry = "") => {
   let temp: { [key: string]: string | Array<string> } = {};
   Object.entries(obj).forEach(([i, j]) => {
@@ -9,11 +9,11 @@ const translate = (obj, carry = "") => {
   });
   return temp;
 };
-interface LoginProps {
-  dispatch: (x: ReducerType) => null;
-}
+// interface LoginProps {
+//   dispatch: (x: ReducerType) => null;
+// }
 
-const Login = ({ dispatch }: LoginProps) => {
+const Login = ( ) => {
   const [session, setSession] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -36,10 +36,7 @@ const Login = ({ dispatch }: LoginProps) => {
       .then((response) => {
         setSession(translate(response));
         setLoggedIn(true);
-        dispatch({
-          type: "shared/update",
-          payload: { act: "login", ...response },
-        });
+        sharedResources().put("login",translate(response))
       })
 
       .catch((e) => {
@@ -54,7 +51,7 @@ const Login = ({ dispatch }: LoginProps) => {
       <form onSubmit={login} action="" method="post">
         <input type="text" name="username" />
         <input type="password" name="password" />
-        <input type="submit" value="login" />
+        <input className="btn btn-outline-primary" type="submit" value="login" />
       </form>
 
       {loggedIn && (

@@ -40,7 +40,7 @@ const config: Configuration = {
       library: { type: "var", name: "nav" },
       exposes: {
         "./App": "./src/Nav.tsx",
-        "./NavigationHelper": "./src/NavigationHelper.tsx",
+        "./SharedChannel":"./src/services/sharedChannel.ts",
       },
       shared: { react: { singleton: true }, "react-dom": { singleton: true } },
     }),

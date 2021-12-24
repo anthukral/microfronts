@@ -4,7 +4,6 @@ const sharedSlice = createSlice({
   initialState: {},
   reducers: {
     update: (state, action) => {
-      console.log(action);
       const { act, ...payload } = action.payload;
       state[act] = JSON.parse(JSON.stringify(payload));
     },

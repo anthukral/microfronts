@@ -20,7 +20,7 @@ export default function Product({ product, helpers }: Product) {
   }, [product, dispatch]);
 
   const productStore = useSelector(productSelector);
-
+  console.log(productStore)
   return (
     <>
       <h1>Product {product && <span>{product}</span>}</h1>

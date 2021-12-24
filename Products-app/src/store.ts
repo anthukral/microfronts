@@ -12,8 +12,7 @@ export const stateSelector = (state) => {
   return state.products || {};
 };
 export const product = (state) => {
-  console.log(state);
-  return state.product;
+  return state.products.product;
 };
 
 export const { setProduct } = productSlice.actions;

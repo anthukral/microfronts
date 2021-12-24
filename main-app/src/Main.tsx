@@ -1,4 +1,4 @@
-import React, { useState, Suspense, useContext, useEffect } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import {
   Routes,
   Route,
@@ -8,9 +8,10 @@ import {
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { stateSelector, update } from "./store";
-import { Product, Footer, Nav } from "./imports";
+import { Product, Footer, Nav ,shared} from "./imports";
 import routes from "./shared/routes";
-import { ThemeContext } from "./shared/Observable";
+import ContextTest from "./ContextTest";
+
 export default function Main() {
   const [theme, setTheme]=useState(0);
   const location = useLocation();
@@ -18,11 +19,8 @@ export default function Main() {
   const [queryedProduct, setQuery] = useState(null);
   const dispatch = useDispatch();
   const state = useSelector(stateSelector);
-  const ctx = useContext(ThemeContext);
-  useEffect(() => {
-    ctx && ctx[1] ? ctx[1]("somethign") : "";
-  }, [ctx]);
-
+  const [sharedResource, setShared]=useState(null)
+  
   const channel = new BroadcastChannel("theme");
 window.__channel=channel;
 
@@ -33,23 +31,36 @@ const themeChange=()=>{
   }else{
     setTheme(theme+1)
   }
-window.__channel.postMessage(themes[theme]);
 
+  window.__channel.postMessage(themes[theme]);
 }
+useEffect(()=>{
+  shared.then(result=>{
+    if(result){
+    setShared(result.default());
+   result.default().addEvents((
+      (i)=>dispatch(update({act:i.key, value:i.value}))
+      ),"login")
+    }
+  })
+},[dispatch]);
 
-  return (
-    <>
+return (
       <Suspense fallback={"loading"}>
+        
         <Nav
           searchQuery={setQuery}
           helpers={{ location, navigator, dispatch }}
         />
         <hr/>
         <h1>Nykaa Fashion</h1>
+        <span>Shared Resources available : {sharedResource && Object.keys(sharedResource.state).length}</span>
+        <br/>
         <button onClick={themeChange}> Change theme</button>
         <hr/>
         <Product product={queryedProduct} helpers={{ location, state }} />
         <hr/>
+        <p>Route Layout of main app</p>
         <Routes>
           {routes.map((i) => (
             <Route key={i.path} path={i.path} element={i.element} />
@@ -58,17 +69,18 @@ window.__channel.postMessage(themes[theme]);
         <hr/>
         <Footer location={location} />
         <hr/>
+<button className="btn btn-outline-primary">
         <Link
           to="/login"
           onClick={() => {
-            console.log("clicck");
             dispatch(update({ act: "click", value: "login clicked" }));
           }}
         >
           Login
         </Link>
-        <hr/>        
+        </button>
+        <hr/>  
+<ContextTest />
       </Suspense>
-    </>
   );
 }
