@@ -12,10 +12,15 @@ import Utils from "../../microfrontend-utils";
 Utils.createOrRegisterContext("ThemeContext");
 const ThemeContext=Utils.getContext("ThemeContext");
 
+const theme={
+  color:"text-primary",
+  align:"text-center",
+  style:"display-1"
+}
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeContext.Provider value={'Theme Dark'}>
+      <ThemeContext.Provider value={theme}>
       <BrowserRouter>
         <Context>
           <Main />

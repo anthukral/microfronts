@@ -55,6 +55,8 @@ return (
         <hr/>
         <h1>Nykaa Fashion</h1>
         <span>Shared Resources available : {sharedResource && Object.keys(sharedResource.state).length}</span>
+        <span>Shared Resources  : {sharedResource && JSON.stringify(sharedResource.get("login"))}</span>
+        <h1>{JSON.stringify(state)}</h1>
         <br/>
         <button onClick={themeChange}> Change theme</button>
         <hr/>

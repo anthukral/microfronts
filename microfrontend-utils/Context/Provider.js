@@ -1,6 +1,7 @@
 //createOrRegisterContext
 //getContextValue
-var contexts={};
+if(!window.contexts)
+ window.contexts={};
 
 
 const {createContext} =require("react");

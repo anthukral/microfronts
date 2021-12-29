@@ -21,12 +21,11 @@ export interface NavProps {
   };
 }
 export default function Nav(props: NavProps) {
-  const ThemeContext=Utils.getContext("ALL");
-  console.log("THEME CONTEXT", ThemeContext)
+  const ThemeContext=Utils.getContext("ThemeContext");
+  
 
  const ctx=useContext(ThemeContext?ThemeContext:{});
 
-  console.log(ctx);
  
   const setQuery = ({ target }: EventTarget) => {
     if (props.searchQuery) {
@@ -37,6 +36,7 @@ export default function Nav(props: NavProps) {
     <MemoryRouter>
       <NavigationHelper {...props} />
       <Home setQuery={setQuery} />
+    <h1> Style from context is <i className={Object.values(ctx).join(" ")}> {Object.values(ctx).join(" , ")}</i></h1>
       <Routes>
         <Route
           path="/login"

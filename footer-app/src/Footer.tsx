@@ -1,9 +1,14 @@
-import React,{useEffect,useState} from "react";
-
+import React,{useEffect,useState,useContext} from "react";
+import Utils from "../../microfrontend-utils"
 const channel=window.__channel;
 export default function Footer() {
-  const [theme, setThemeFromChannel]=useState("");
+  const ThemeContext=Utils.getContext("ThemeContext");
+  
 
+  const ctx=useContext(ThemeContext?ThemeContext:{});
+ 
+  const [theme, setThemeFromChannel]=useState("");
+  console.log(ctx)
   const channelHook=()=>{
     if(channel){
     channel.onmessage=({data})=>{
@@ -19,6 +24,8 @@ export default function Footer() {
   }
   return (
     <div>
+          {ctx && <p className={Object.values(ctx).join(" ")}>Styled element</p>}
+      
       <div>
         <ul>
           <li>footer 1</li>
@@ -29,6 +36,7 @@ export default function Footer() {
 
           <li>footer 4</li>
           {theme &&<li>{theme}</li>}
+    
         </ul>
       </div>
     </div>
